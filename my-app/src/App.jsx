@@ -32,7 +32,7 @@ import SendMessage from './Pages/User/SendMessage';
 import RequestCallback from './Pages/User/RequestCallback';
 import AdminBillHistory from './Pages/AdminBillHistory';
 import 'react-toastify/dist/ReactToastify.css';
-
+import AdminView from './Pages/AdminView';
 import AdminLogin from './Pages/AdminLogin';
 import AdminTotalAgents from './Pages/AdminTotalAgent';
 import AdminDashboard from './Pages/AdminDashboard';
@@ -42,6 +42,18 @@ import ExperianForm from './Pages/ExperianForm'; // ✅ Add this
 
 import ReportsDownload from './Pages/ReportDownload';
 import AdminProtectedRoute from './Components/AdminProtectedRoute';
+import EmiCalculatorPage from './Components/EmiCalculator';
+ import ReducingEMICalculator from './Pages/Calculator/ReducingEMICalculator';
+ import FlatEMICalculator from './Pages/Calculator/FlatEMICalculator';
+ import ReducingToFlat from './Pages/Calculator/ReducingToFlat';
+ import FlatToReducing from './Pages/Calculator/FlatToReducing';
+import FlatEmiReport from './Pages/FlatReport';
+
+import ReducingEmiReport from './Pages/ReducingEmiReport';
+
+
+ 
+
 const ShareWithProfessionals = () => <div className="pt-24 text-center text-xl">Share With Other Professionals Page</div>;
 const RateAndReviews = () => <div className="pt-24 text-center text-xl">Rate & Reviews on Google Page</div>;
 const Dispute = () => <div className="pt-24 text-center text-xl">Raise a Dispute to Bureau Page</div>;
@@ -93,9 +105,22 @@ function App() {
         <Route path="/admin/customers" element={<AdminProtectedRoute><MyCustomers /></AdminProtectedRoute>} />
         <Route path="/admin/reports" element={<AdminProtectedRoute><ReportsDownload /></AdminProtectedRoute>} />
         <Route path="/admin/bill-history" element={<AdminProtectedRoute><AdminBillHistory /></AdminProtectedRoute>} />
-         <Route path="/experian" element={<ExperianForm />} />
-<Route path="/cibil" element={<CibilReports />} />
-<Route path="/oauth-success" element={<OauthSuccess />} />
+        <Route path="/experian" element={<ExperianForm />} />
+        <Route path="/cibil" element={<CibilReports />} />
+        <Route path="/oauth-success" element={<OauthSuccess />} />
+ <Route path="/admin/view/:id" element={<AdminView />} />
+        {/* EMI CALCULATOR */}
+        <Route path="/emi-calculator" element={<EmiCalculatorPage />} />
+        <Route path="/emi/reducing" element={<ReducingEMICalculator />} />
+        <Route path="/emi/flat" element={<FlatEMICalculator />} />
+        <Route path="/emi/reducing-to-flat" element={<ReducingToFlat />} />
+        <Route path="/emi/flat-to-reducing" element={<FlatToReducing />} />
+
+        <Route path="/flat-emi-report" element={<FlatEmiReport />} />
+
+        <Route path="/reducing-emi-report" element={<ReducingEmiReport />} />
+
+
       </Routes>
 
       {!hideHeaderFooter && <Footer />}

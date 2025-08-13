@@ -1,186 +1,340 @@
+// import React, { useEffect, useState } from 'react';
+// import adminAxios from '../utils/axiosadmin';
+
+// export default function ReportsDownload() {
+//   const [reports, setReports] = useState([]);
+//   const [summary, setSummary] = useState({ totalReports: 0 });
+//   const [filter, setFilter] = useState('lifetime');
+//   const [fromDate, setFromDate] = useState('');
+//   const [toDate, setToDate] = useState('');
+//   const [searchName, setSearchName] = useState('');
+//   const [bureau, setBureau] = useState('');
+
+//   useEffect(() => {
+//     fetchReports();
+//   }, [filter, fromDate, toDate, bureau, searchName]); 
+
+//   const fetchReports = async () => {
+//     try {
+//       let url = `/admin/reports/filter?filter=${filter}&bureau=${bureau}`;
+
+
+//       if (filter === 'custom' && fromDate && toDate) {
+//         url += `&from=${fromDate}&to=${toDate}`;
+//       }
+
+//       if (searchName) {
+//         url += `&name=${encodeURIComponent(searchName)}`;
+//       }
+
+//       const res = await adminAxios.get(url);
+//       setReports(res.data.reports || []);
+//       setSummary({ totalReports: res.data.totalReports || 0 });
+//     } catch (error) {
+//       console.error('Error fetching reports:', error);
+//       setReports([]);
+//       setSummary({ totalReports: 0 });
+//     }
+//   };
+
+//   return (
+//     <div className="p-6">
+//       <h2 className="text-xl font-bold mb-4">Reports Download</h2>
+
+//       {/* 🔍 Filters Section */}
+//       <div className="flex flex-wrap gap-2 mb-4">
+//         {['today', 'yesterday', 'lifetime', 'custom'].map((item) => (
+//           <button
+//             key={item}
+//             onClick={() => setFilter(item)}
+//             className={`px-3 py-1 border rounded ${filter === item ? 'bg-blue-600 text-white' : 'bg-gray-100'
+//               }`}
+//           >
+//             {item.charAt(0).toUpperCase() + item.slice(1)}
+//           </button>
+//         ))}
+//       </div>
+
+//       {filter === 'custom' && (
+//         <div className="mb-4 flex gap-4">
+//           <input
+//             type="date"
+//             value={fromDate}
+//             onChange={(e) => setFromDate(e.target.value)}
+//             className="border p-2 rounded"
+//           />
+//           <input
+//             type="date"
+//             value={toDate}
+//             onChange={(e) => setToDate(e.target.value)}
+//             className="border p-2 rounded"
+//           />
+//         </div>
+//       )}
+
+//       {/* 🔎 Search + Bureau + Button */}
+//       <div className="flex flex-wrap gap-4 mb-4 items-end">
+//         <div>
+//           <input
+//             type="text"
+//             value={searchName}
+//             onChange={(e) => setSearchName(e.target.value)}
+//             onKeyDown={(e) => {
+//               if (e.key === 'Enter') {
+//                 fetchReports(); 
+//               }
+//             }}
+//             placeholder="Search by name"
+//             className="border border-gray-300 px-3 py-2 rounded w-full"
+//           />
+
+//         </div>
+
+//         <div>
+//           <select
+//             value={bureau}
+//             onChange={(e) => setBureau(e.target.value)}
+//             className="border p-2 rounded"
+//           >
+//           <option value="">-- Select Bureau --</option>
+//             <option value="EXPERIAN">EXPERIAN</option>
+//             <option value="CIBIL">CIBIL</option>
+//             <option value="CRIF">CRIF</option>
+//             <option value="EQUIFAX">EQUIFAX</option>
+//           </select>
+//         </div>
+
+//         <div>
+        
+//           <button
+//             onClick={fetchReports}
+//             className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-green-700"
+//           >
+//             🔍 Search
+//           </button>
+
+//         </div>
+//       </div>
+
+//       <div className="mb-4 font-semibold">
+//         Total Reports: {summary.totalReports}
+//       </div>
+
+//       {/* 📄 Reports Table */}
+//       <div className="overflow-x-auto">
+//         <table className="min-w-full border border-gray-300">
+//           <thead>
+//             <tr className="bg-gray-200">
+//               <th className="p-2 border">#</th>
+//               <th className="p-2 border">Customer Name</th>
+//               <th className="p-2 border">Bureau</th>
+//               <th className="p-2 border">Date</th>
+//               <th className="p-2 border">PDF</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {reports.length > 0 ? (
+//               reports.map((report, index) => (
+//                 <tr key={report._id || index}>
+//                   <td className="p-2 border">{index + 1}</td>
+//                   <td className="p-2 border">{report.customerName}</td>
+//                   <td className="p-2 border">{report.bureau}</td>
+//                   <td className="p-2 border">
+//                     {report?.createdAt && !isNaN(new Date(report.createdAt))
+//                       ? new Date(report.createdAt).toLocaleString('en-IN', {
+//                         day: '2-digit',
+//                         month: '2-digit',
+//                         year: 'numeric',
+//                         hour: '2-digit',
+//                         minute: '2-digit',
+//                       })
+//                       : 'N/A'}
+//                   </td>
+
+//                   <td className="p-2 border">
+//                     <a
+//                       href={report.pdf_url}
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       className="text-blue-600 underline"
+//                     >
+//                       Download
+//                     </a>
+
+
+//                   </td>
+//                 </tr>
+//               ))
+//             ) : (
+//               <tr>
+//                 <td className="p-4 text-center border" colSpan="5">
+//                   No reports found
+//                 </td>
+//               </tr>
+//             )}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// }
+
 import React, { useEffect, useState } from 'react';
 import adminAxios from '../utils/axiosadmin';
 
 export default function ReportsDownload() {
   const [reports, setReports] = useState([]);
-  const [summary, setSummary] = useState({});
+  const [summary, setSummary] = useState({ totalReports: 0 });
   const [filter, setFilter] = useState('lifetime');
-  const [customDates, setCustomDates] = useState({ from: '', to: '' });
-  const [search, setSearch] = useState({ name: '', state: '', city: '', pincode: '' });
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [searchName, setSearchName] = useState('');
+  const [bureau, setBureau] = useState('EXPERIAN');
 
   useEffect(() => {
     fetchReports();
-  }, [filter, customDates]);
+    // eslint-disable-next-line
+  }, [filter, fromDate, toDate, bureau, searchName]);
 
   const fetchReports = async () => {
-    let params = new URLSearchParams();
+    try {
+      let url = `/admin/reports/filter?filter=${filter}&bureau=${bureau}`;
 
-    if (filter === 'custom') {
-      if (customDates.from) params.append('from', customDates.from);
-      if (customDates.to) params.append('to', customDates.to);
-    } else {
-      params.append('filter', filter);
+      if (filter === 'custom' && fromDate && toDate) {
+        url += `&from=${fromDate}&to=${toDate}`;
+      }
+
+      if (searchName) {
+        url += `&name=${encodeURIComponent(searchName)}`;
+      }
+
+      const res = await adminAxios.get(url);
+      setReports(res.data.reports || []);
+      setSummary({ totalReports: res.data.totalReports || 0 });
+    } catch (error) {
+      console.error('Error fetching reports:', error);
+      setReports([]);
+      setSummary({ totalReports: 0 });
     }
-
-    Object.entries(search).forEach(([key, val]) => {
-      if (val.trim()) params.append(key, val.trim());
-    });
-
-    const res = await adminAxios.get(`/admin/reports?${params}`);
-    setReports(res.data.reports || []);
-    setSummary(res.data.summary || {});
   };
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    fetchReports();
-  };
-
-  const filterOptions = [
-    { label: 'Today', value: 'today' },
-    { label: 'Yesterday', value: 'yesterday' },
-    { label: 'Lifetime', value: 'lifetime' },
-    { label: 'Custom', value: 'custom' },
-  ];
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Reports Download</h2>
+      <h2 className="text-xl font-bold mb-4">📊 Reports Download</h2>
 
-      {/* ✅ Filter Buttons */}
-      <div className="flex gap-3 mb-4 flex-wrap">
-        {filterOptions.map((opt) => (
+      {/* 🔍 Filters Section */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {['today', 'yesterday', 'lifetime', 'custom'].map((item) => (
           <button
-            key={opt.value}
-            onClick={() => setFilter(opt.value)}
-            className={`px-4 py-2 rounded-lg border text-sm ${
-              filter === opt.value
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+            key={item}
+            onClick={() => setFilter(item)}
+            className={`px-3 py-1 border rounded ${
+              filter === item ? 'bg-blue-600 text-white' : 'bg-gray-100'
             }`}
           >
-            {opt.label}
+            {item.charAt(0).toUpperCase() + item.slice(1)}
           </button>
         ))}
       </div>
 
-      {/* ✅ Custom Date Picker */}
+      {/* 📅 Custom Date Range */}
       {filter === 'custom' && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div>
-            <label className="text-sm">From</label>
-            <input
-              type="date"
-              value={customDates.from}
-              onChange={(e) =>
-                setCustomDates((prev) => ({ ...prev, from: e.target.value }))
-              }
-              className="border w-full px-3 py-2 rounded"
-            />
-          </div>
-          <div>
-            <label className="text-sm">To</label>
-            <input
-              type="date"
-              value={customDates.to}
-              onChange={(e) =>
-                setCustomDates((prev) => ({ ...prev, to: e.target.value }))
-              }
-              className="border w-full px-3 py-2 rounded"
-            />
-          </div>
+        <div className="mb-4 flex gap-4">
+          <input
+            type="date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+            className="border p-2 rounded"
+          />
+          <input
+            type="date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+            className="border p-2 rounded"
+          />
         </div>
       )}
 
-      {/* ✅ Search Form */}
-      <form
-        onSubmit={handleSearch}
-        className="grid md:grid-cols-4 gap-3 mb-6 text-sm"
-      >
+      {/* 🔎 Search Inputs */}
+      <div className="flex flex-wrap gap-4 mb-4 items-end">
         <input
-          name="name"
-          value={search.name}
-          onChange={(e) => setSearch({ ...search, name: e.target.value })}
-          placeholder="Name"
-          className="border px-3 py-2 rounded"
+          type="text"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && fetchReports()}
+          placeholder="Search by name or Unique ID"
+          className="border border-gray-300 px-3 py-2 rounded w-full sm:w-64"
         />
-        <input
-          name="state"
-          value={search.state}
-          onChange={(e) => setSearch({ ...search, state: e.target.value })}
-          placeholder="State"
-          className="border px-3 py-2 rounded"
-        />
-        <input
-          name="city"
-          value={search.city}
-          onChange={(e) => setSearch({ ...search, city: e.target.value })}
-          placeholder="City"
-          className="border px-3 py-2 rounded"
-        />
-        <input
-          name="pincode"
-          value={search.pincode}
-          onChange={(e) => setSearch({ ...search, pincode: e.target.value })}
-          placeholder="Pincode"
-          className="border px-3 py-2 rounded"
-        />
-        <button
-          type="submit"
-          className="md:col-span-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Search
-        </button>
-      </form>
 
-      {/* ✅ Summary Count */}
-      <div className="grid md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white border rounded p-4 shadow text-center">
-          <h4 className="text-sm text-gray-600">Total Reports</h4>
-          <p className="text-2xl font-bold text-blue-700">{summary.total || 0}</p>
-        </div>
-        {summary.byBureau &&
-          Object.entries(summary.byBureau).map(([bureau, count]) => (
-            <div
-              key={bureau}
-              className="bg-white border rounded p-4 shadow text-center"
-            >
-              <h4 className="text-sm text-gray-600">{bureau.toUpperCase()} Reports</h4>
-              <p className="text-2xl font-bold text-blue-700">{count}</p>
-            </div>
-          ))}
+        <select
+          value={bureau}
+          onChange={(e) => setBureau(e.target.value)}
+          className="border p-2 rounded"
+        >
+          <option value="EXPERIAN">EXPERIAN</option>
+          <option value="CIBIL">CIBIL</option>
+          <option value="CRIF">CRIF</option>
+          <option value="EQUIFAX">EQUIFAX</option>
+        </select>
+
+        <button
+          onClick={fetchReports}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          🔍 Search
+        </button>
       </div>
 
-      {/* ✅ Report Table */}
-      <div className="overflow-x-auto border rounded shadow-sm">
-        <table className="min-w-full table-auto text-sm text-left">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-2 border">Name</th>
-              <th className="px-4 py-2 border">Bureau</th>
-              <th className="px-4 py-2 border">Fetched At</th>
-              <th className="px-4 py-2 border">State</th>
-              <th className="px-4 py-2 border">City</th>
-              <th className="px-4 py-2 border">Pincode</th>
+      <div className="mb-4 font-semibold">Total Reports: {summary.totalReports}</div>
+
+      {/* 📄 Reports Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-2 border">#</th>
+              <th className="p-2 border">Customer Name</th>
+                <th className="p-2 border">Unique ID</th>
+              <th className="p-2 border">Bureau</th>
+              <th className="p-2 border">Date</th>
+              <th className="p-2 border">PDF</th>
             </tr>
           </thead>
           <tbody>
             {reports.length > 0 ? (
-              reports.map((r) => (
-                <tr key={r._id} className="even:bg-gray-50">
-                  <td className="px-4 py-2 border">{r.name}</td>
-                  <td className="px-4 py-2 border">{r.bureau}</td>
-                  <td className="px-4 py-2 border">
-                    {new Date(r.fetchedAt).toLocaleDateString()}
+              reports.map((report, index) => (
+                <tr key={report._id || index}>
+                  <td className="p-2 border text-center">{index + 1}</td>
+               <td className="p-2 border">{report?.customerName || 'N/A'}</td>
+
+                    <td className="p-2 border">{report?.uniqueId || 'N/A'}</td>
+                  <td className="p-2 border">{report.bureau}</td>
+                  <td className="p-2 border">
+                    {report?.createdAt
+                      ? new Date(report.createdAt).toLocaleString('en-IN', {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })
+                      : 'N/A'}
                   </td>
-                  <td className="px-4 py-2 border">{r.state}</td>
-                  <td className="px-4 py-2 border">{r.city}</td>
-                  <td className="px-4 py-2 border">{r.pincode}</td>
+                  <td className="p-2 border text-center">
+                    <a
+                      href={report.pdf_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      Download
+                    </a>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center py-4 text-gray-500 italic">
+                <td colSpan="6" className="p-4 text-center border">
                   No reports found
                 </td>
               </tr>
@@ -191,4 +345,3 @@ export default function ReportsDownload() {
     </div>
   );
 }
-//Report download on the basis of burea

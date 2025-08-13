@@ -13,7 +13,7 @@ const Home = () => {
     {
       title: 'EMI Calculator',
       desc: 'Compute your EMI easily',
-      href: '#emi',
+      href: '/emi-calculator',
       img: 'https://paisawise.com/wp-content/uploads/2016/08/Loan-EMI-Calculator.png',
     },
     {
