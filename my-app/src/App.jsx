@@ -15,6 +15,7 @@ import Disclaimer from './Pages/Disclaimer';
 import WhyChooseUs from './Pages/WhyChooseUs';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import TermsAndConditions from "./Pages/TermsandCondition";
+ import MyCustomers from './Pages/MyCustomers';
 
 
 import Register from './Components/Register';
@@ -35,24 +36,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminView from './Pages/AdminView';
 import AdminLogin from './Pages/AdminLogin';
 import AdminTotalAgents from './Pages/AdminTotalAgent';
+ import Important from "./Pages/Important"; // ✅ Import your new page
 import AdminDashboard from './Pages/AdminDashboard';
-import MyCustomers from "./Pages/AdminMyCustomer"; // ✅ Correct
 import OauthSuccess from './Pages/OauthSuccess';
 import ExperianForm from './Pages/ExperianForm'; // ✅ Add this
 
 import ReportsDownload from './Pages/ReportDownload';
 import AdminProtectedRoute from './Components/AdminProtectedRoute';
 import EmiCalculatorPage from './Components/EmiCalculator';
- import ReducingEMICalculator from './Pages/Calculator/ReducingEMICalculator';
- import FlatEMICalculator from './Pages/Calculator/FlatEMICalculator';
- import ReducingToFlat from './Pages/Calculator/ReducingToFlat';
- import FlatToReducing from './Pages/Calculator/FlatToReducing';
+import ReducingEMICalculator from './Pages/Calculator/ReducingEMICalculator';
+import FlatEMICalculator from './Pages/Calculator/FlatEMICalculator';
+import ReducingToFlat from './Pages/Calculator/ReducingToFlat';
+import FlatToReducing from './Pages/Calculator/FlatToReducing';
 import FlatEmiReport from './Pages/FlatReport';
 
 import ReducingEmiReport from './Pages/ReducingEmiReport';
-
-
- 
 
 const ShareWithProfessionals = () => <div className="pt-24 text-center text-xl">Share With Other Professionals Page</div>;
 const RateAndReviews = () => <div className="pt-24 text-center text-xl">Rate & Reviews on Google Page</div>;
@@ -102,13 +100,15 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
         <Route path="/admin/task-agents" element={<AdminProtectedRoute><AdminTotalAgents /></AdminProtectedRoute>} />
-        <Route path="/admin/customers" element={<AdminProtectedRoute><MyCustomers /></AdminProtectedRoute>} />
+        {/* <Route path="/admin/customers" element={<AdminProtectedRoute><MyCustomers /></AdminProtectedRoute>} /> */}
+        <Route path="/admin/important" element={<AdminProtectedRoute><Important /></AdminProtectedRoute>} />
+
         <Route path="/admin/reports" element={<AdminProtectedRoute><ReportsDownload /></AdminProtectedRoute>} />
         <Route path="/admin/bill-history" element={<AdminProtectedRoute><AdminBillHistory /></AdminProtectedRoute>} />
         <Route path="/experian" element={<ExperianForm />} />
         <Route path="/cibil" element={<CibilReports />} />
         <Route path="/oauth-success" element={<OauthSuccess />} />
- <Route path="/admin/view/:id" element={<AdminView />} />
+        <Route path="/admin/view/:id" element={<AdminView />} />
         {/* EMI CALCULATOR */}
         <Route path="/emi-calculator" element={<EmiCalculatorPage />} />
         <Route path="/emi/reducing" element={<ReducingEMICalculator />} />
@@ -129,4 +129,3 @@ function App() {
 }
 
 export default App;
-
